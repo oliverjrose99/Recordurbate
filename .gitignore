@@ -99,3 +99,7 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# CUSTOM
+src/configs
+releases/*/*
