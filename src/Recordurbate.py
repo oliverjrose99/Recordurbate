@@ -1,7 +1,9 @@
+#!/usr/bin/python3
+
 import sys
 
-from src.bot import Bot
-from src.config import load_config, find_in_config, save_config
+from bot import Bot
+from config import load_config, find_in_config, save_config
 
 
 def usage():
