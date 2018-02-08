@@ -1,4 +1,5 @@
 import json
+import sys
 
 
 config_loc = "configs/config.json"
@@ -11,7 +12,7 @@ def load_config():
             return json.load(f)
     except Exception as e:
         print(e)
-        return None
+        sys.exit(-1)
 
 
 # opens file, writes config, returns True on success, False on error
@@ -23,13 +24,12 @@ def save_config(config):
         return True
     except Exception as e:
         print(e)
-        return False
+        sys.exit(-1)
 
 
-# looks for steamer in config, returns True and idx, or False and None
+# look for steamer in config, return True and idx, or False and None
 def find_in_config(username, config):
-    for idx, i in enumerate(config["streamers"]):
-        if i["name"] == username:
-            return True, idx
-
-    return False, None
+    try:
+        return True, config["streamers"].index(username)
+    except ValueError:
+        return False, None

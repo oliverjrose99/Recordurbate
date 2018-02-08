@@ -14,14 +14,9 @@ def usage():
 def main():
 
     if len(sys.argv) == 3 and sys.argv[1] in ["add", "del"]:
+        # lower username, load config, look for streamer
         username = sys.argv[2].lower()
-
-        # load and check config
         config = load_config()
-        if config is None:
-            return
-
-        # look for streamer
         found, idx = find_in_config(username, config)
 
         if sys.argv[1] == "add":
@@ -32,7 +27,7 @@ def main():
                 return
 
             # add streamer
-            config["streamers"].append({"name": sys.argv[2], "recording": False})
+            config["streamers"].append(username)
             print("{} has been added".format(username))
 
         elif sys.argv[1] == "del":
@@ -48,8 +43,6 @@ def main():
 
         if save_config(config):
             print("Done...")
-        else:
-            print("Could not save config")
 
     elif len(sys.argv) == 2 and sys.argv[1] == "run":
         bot = Bot()

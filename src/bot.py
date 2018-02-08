@@ -15,23 +15,50 @@ class Bot:
     processes = []
 
     def __init__(self):
-
         # load config
-        self.config = load_config()
-        if self.config is None:
-            self.error = True
-            return
+        self.reload_config()
 
         # reg signals
         signal.signal(signal.SIGINT, self.stop)
         signal.signal(signal.SIGTERM, self.stop)
 
     def stop(self, signum, stack):
+        print("Caught stop signal, stopping")
         self.running = False
 
-    def reload(self, signum, stack):
-        # todo: implement
-        return
+    def reload_config(self):
+
+        # if config not loaded at all
+        if self.config is None:
+            self.config = load_config()
+
+            for idx, name in enumerate(self.config["streamers"]):
+                # add info
+                self.config["streamers"][idx] = [name, False]
+
+            return
+
+        # load new
+        new_config = load_config()
+
+        # remove all deleted streamers
+        for idx, streamer in enumerate(self.config["streamers"]):
+            if streamer[0] not in new_config["streamers"]:
+                print(streamer[0], "has been removed")
+                del self.config["streamers"][idx]
+
+        # add all new streamers
+        for new_streamer in new_config["streamers"]:
+
+            # find streamer
+            found = False
+            for streamer in self.config["streamers"]:
+                if streamer[0] == new_streamer:
+                    found = True
+
+            # add if not found
+            if not found:
+                self.config["streamers"].append([new_streamer, False])
 
     @staticmethod
     def is_online(username):
@@ -53,39 +80,48 @@ class Bot:
     def run(self):
         while self.running:
 
+            # reload config
+            if self.config["auto_reload_config"]:
+                self.reload_config()
+
             # check current processes
             for idx, rec in enumerate(self.processes):
 
                 # check if ended
                 if rec[1].poll() is not None:
-                    print("{} has stopped streaming".format(self.config["streamers"][rec[0]]["name"]))
+                    print("Stopped recording", rec[0])
 
-                    # set not recording, remove from processes
-                    self.config["streamers"][rec[0]]["recording"] = False
+                    # set streamer recording to false
+                    for loc, streamer in enumerate(self.config["streamers"]):
+                        if streamer[0] == rec[0]:
+                            self.config["streamers"][loc][1] = False
+
+                    # remove from proc list
                     del self.processes[idx]
 
             # check to start recording
             for idx, streamer in enumerate(self.config["streamers"]):
 
                 # if already recording
-                if streamer["recording"]:
+                if streamer[1]:
                     continue
 
-                if self.is_online(streamer["name"]):
-                    print("Starting to record", streamer["name"])
+                # check if online
+                if self.is_online(streamer[0]):
+                    print("Started to record", streamer[0])
 
                     # prep args
                     args = [self.config["youtube-dl_cmd"],  # youtube-dl bin
-                            "https://chaturbate.com/{}/".format(streamer["name"]),  # chaturbate url
+                            "https://chaturbate.com/{}/".format(streamer[0]),  # chaturbate url
                             "--config-location", self.config["youtube-dl_config"]]  # youtube-dl config
                     # append idx and process to processes list
-                    self.processes.append([idx, subprocess.Popen(args,
+                    self.processes.append([streamer[0], subprocess.Popen(args,
                                                                  stdin=subprocess.DEVNULL,
                                                                  stdout=subprocess.DEVNULL,
                                                                  stderr=subprocess.DEVNULL)])
 
                     # set to recording
-                    self.config["streamers"][idx]["recording"] = True
+                    self.config["streamers"][idx][1] = True
 
             # wait 1 min in 1 second intervals
             for i in range(60):
