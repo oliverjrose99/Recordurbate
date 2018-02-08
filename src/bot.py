@@ -52,7 +52,6 @@ class Bot:
 
     def run(self):
         while self.running:
-            print("LOOP")
 
             # check current processes
             for idx, rec in enumerate(self.processes):
