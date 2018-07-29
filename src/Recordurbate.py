@@ -8,7 +8,8 @@ from config import load_config, find_in_config, save_config
 
 def usage():
     print("\nUsage: Recordurbate [add | del] username")
-    print("       Recordurbate run\n")
+    print("       Recordurbate run")
+    print("       Recordurbate list\n)
 
 
 def main():
@@ -48,6 +49,13 @@ def main():
         bot = Bot()
         if not bot.error:
             bot.run()
+     
+    #list command - outputs the list of streamers - usage: ./Recordurbate.py list
+    elif len(sys.argv) == 2 and sys.argv[1] == "list":
+        config = load_config()
+        print('Streamers in recording list:\n')
+        for streamer in config['streamers']:
+            print('- ' + streamer)
 
     else:
         usage()
