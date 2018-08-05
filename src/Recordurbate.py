@@ -51,6 +51,13 @@ def main():
         bot = Bot()
         if not bot.error:
             bot.run()
+     
+    #list command - outputs the list of streamers - usage: ./Recordurbate.py list
+    elif len(sys.argv) == 2 and sys.argv[1] == "list":
+        config = load_config()
+        print('Streamers in recording list:\n')
+        for streamer in config['streamers']:
+            print('- ' + streamer)
 
     #list command - outputs the list of streamers - usage: ./Recordurbate.py list
     elif len(sys.argv) == 2 and sys.argv[1] == "list":
