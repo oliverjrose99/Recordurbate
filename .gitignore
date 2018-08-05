@@ -101,5 +101,4 @@ ENV/
 .mypy_cache/
 
 # CUSTOM
-src/configs
 releases/*/*
