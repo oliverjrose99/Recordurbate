@@ -8,7 +8,6 @@ The act of recording a Chaturbate live stream
 ```commandline
 wget https://github.com/oliverjrose99/Recordurbate/releases/download/1.2.0/recordurbate.tar
 tar -xvf recordurbate.tar
-cd recordurbate
 chmod +x Recordurbate.py
 ```
 The default config files will work out of the box with youtube-dl and FFmpeg installed. Streams will be saved to the folder videos/\<name>/\<name> \<date> \<hour>_\<min>.mp4. This can be changed by changing the youtube-dl.config file, see the configuration section for more. 
