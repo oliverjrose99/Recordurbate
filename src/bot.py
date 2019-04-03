@@ -14,7 +14,11 @@ class Bot:
     config = None
     processes = []
 
-    def __init__(self):
+    logger = None
+
+    def __init__(self, logger):
+        self.logger = logger
+
         # load config
         self.reload_config()
 
@@ -23,7 +27,7 @@ class Bot:
         signal.signal(signal.SIGTERM, self.stop)
 
     def stop(self, signum, stack):
-        print("Caught stop signal, stopping")
+        self.logger.info("Caught stop signal, stopping")
         self.running = False
 
     def reload_config(self):
@@ -44,7 +48,7 @@ class Bot:
         # remove all deleted streamers
         for idx, streamer in enumerate(self.config["streamers"]):
             if streamer[0] not in new_config["streamers"]:
-                print(streamer[0], "has been removed")
+                self.logger.info(streamer[0], "has been removed")
                 del self.config["streamers"][idx]
 
         # add all new streamers
@@ -74,7 +78,7 @@ class Bot:
             return False
 
         except Exception as e:
-            print(e)
+            self.logger.info(e)
             return None
 
     def run(self):
@@ -89,7 +93,7 @@ class Bot:
 
                 # check if ended
                 if rec[1].poll() is not None:
-                    print("Stopped recording", rec[0])
+                    self.logger.info("Stopped recording", rec[0])
 
                     # set streamer recording to false
                     for loc, streamer in enumerate(self.config["streamers"]):
@@ -108,7 +112,7 @@ class Bot:
 
                 # check if online
                 if self.is_online(streamer[0]):
-                    print("Started to record", streamer[0])
+                    self.logger.info("Started to record", streamer[0])
 
                     # prep args
                     args = [self.config["youtube-dl_cmd"],  # youtube-dl bin
