@@ -12,7 +12,7 @@ def load_config():
             return json.load(f)
     except Exception as e:
         print(e)
-        sys.exit(-1)
+        sys.exit(1)
 
 
 # opens file, writes config, returns True on success, False on error
@@ -24,12 +24,12 @@ def save_config(config):
         return True
     except Exception as e:
         print(e)
-        sys.exit(-1)
+        sys.exit(1)
 
 
 # look for steamer in config, return True and idx, or False and None
 def find_in_config(username, config):
     try:
-        return True, config["streamers"].index(username)
+        return config["streamers"].index(username)
     except ValueError:
-        return False, None
+        return None
