@@ -7,7 +7,7 @@ def usage():
     print("       Recordurbate [start | stop | restart]")
     print("       Recordurbate list")
     print("       Recordurbate import list.txt")
-    print("       Recordurbate export [file location]")
+    print("       Recordurbate export [file location]\n")
 
 def check_num_args(num):
     if len(sys.argv) != num:
@@ -107,13 +107,13 @@ def bot():
     daemon = Daemon()
 
     # start, stop or restart
-    if sys.argv[2] == "start":
+    if sys.argv[1] == "start":
         daemon.start()
     
-    elif sys.argv[2] == "stop":
+    elif sys.argv[1] == "stop":
         daemon.stop()
     
-    elif sys.argv[2] == "restart":
+    elif sys.argv[1] == "restart":
         daemon.restart()
 
 argument_map = {
