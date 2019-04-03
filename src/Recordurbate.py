@@ -8,6 +8,7 @@ def usage():
     print("       Recordurbate list")
     print("       Recordurbate import list.txt")
     print("       Recordurbate export [file location]\n")
+    print("       Recordurbate help\n")
 
 def check_num_args(num):
     if len(sys.argv) != num:
@@ -117,6 +118,7 @@ def bot():
         daemon.restart()
 
 argument_map = {
+    "help": usage,
     "add": add,
     "del": remove,
     "list": list_streamers,
