@@ -64,8 +64,7 @@ class Bot:
             if not found:
                 self.config["streamers"].append([new_streamer, False])
 
-    @staticmethod
-    def is_online(username):
+    def is_online(self, username):
         url = "https://chaturbate.com/get_edge_hls_url_ajax/"
         headers = {"X-Requested-With": "XMLHttpRequest"}
         data = {"room_slug": username, "bandwidth": "high"}
