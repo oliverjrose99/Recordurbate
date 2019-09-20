@@ -3,6 +3,5 @@
     "youtube-dl_config": "configs/youtube-dl.config",
     "auto_reload_config": true,
     "default_export_location": "./list.txt",
-    "streamers": [
-    ]
+    "streamers": []
 }

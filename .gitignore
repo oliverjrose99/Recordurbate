@@ -102,3 +102,4 @@ ENV/
 
 # CUSTOM
 releases/*/*
+.vscode
