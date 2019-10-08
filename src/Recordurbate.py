@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import sys
 from daemon import Daemon
 import config as Config
