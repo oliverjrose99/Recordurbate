@@ -132,5 +132,7 @@ if __name__ == "__main__":
     try:
         func = argument_map.get(sys.argv[1], usage)
         func()
+    except SystemExit: # prevents usage showing twice when starting
+        pass
     except:
         usage()
