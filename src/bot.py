@@ -1,10 +1,9 @@
+import os
 import signal
 import subprocess
-
-import os
-import requests
 import time
 
+import requests
 from config import load_config
 
 
@@ -119,7 +118,7 @@ class Bot:
                             "https://chaturbate.com/{}/".format(streamer[0]),  # chaturbate url
                             "--config-location", self.config["youtube-dl_config"]]  # youtube-dl config
                     # append idx and process to processes list
-                    self.processes.append([streamer[0], subprocess.Popen(args, stdin=os.devnull, stdout=os.devnull, stderr=os.devnull)])
+                    self.processes.append([streamer[0], subprocess.Popen(args, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)])
 
                     # set to recording
                     self.config["streamers"][idx][1] = True
