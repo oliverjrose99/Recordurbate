@@ -27,8 +27,9 @@ class Bot:
         signal.signal(signal.SIGTERM, self.stop)
 
     def stop(self, signum, stack):
-        self.logger.info("Caught stop signal, stopping")
-        self.running = False
+        if self.running:
+            self.logger.info("Caught stop signal, stopping")
+            self.running = False
 
     def reload_config(self):
 
@@ -122,6 +123,10 @@ class Bot:
 
                     # set to recording
                     self.config["streamers"][idx][1] = True
+                
+                # check rate limit
+                if self.config["rate_limit"]:
+                    time.sleep(self.config["rate_limit_time"])
 
             # wait 1 min in 1 second intervals
             for i in range(60):
@@ -135,3 +140,5 @@ class Bot:
             # send sigint, wait for end
             rec[1].send_signal(signal.SIGINT)
             rec[1].wait()
+        
+        self.logger.info("Successfully stopped")
