@@ -2,7 +2,7 @@
 The act of recording a Chaturbate live stream
 ## Requirements
 * Linux
-* Python 3+
+* Python 3+ (requests)
 * Youtube-dl
 * FFmpeg
 ## Installation
