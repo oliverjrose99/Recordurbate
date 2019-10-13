@@ -106,27 +106,33 @@ class Bot:
             # check to start recording
             for idx, streamer in enumerate(self.config["streamers"]):
 
-                # if already recording
-                if streamer[1]:
-                    continue
+                try:
 
-                # check if online
-                if self.is_online(streamer[0]):
-                    self.logger.info("Started to record {}".format(streamer[0]))
+                    # if already recording
+                    if streamer[1]:
+                        continue
 
-                    # prep args
-                    args = [self.config["youtube-dl_cmd"],  # youtube-dl bin
-                            "https://chaturbate.com/{}/".format(streamer[0]),  # chaturbate url
-                            "--config-location", self.config["youtube-dl_config"]]  # youtube-dl config
-                    # append idx and process to processes list
-                    self.processes.append([streamer[0], subprocess.Popen(args, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)])
+                    # check if online
+                    if self.is_online(streamer[0]):
+                        self.logger.info("Started to record {}".format(streamer[0]))
 
-                    # set to recording
-                    self.config["streamers"][idx][1] = True
-                
-                # check rate limit
-                if self.config["rate_limit"]:
-                    time.sleep(self.config["rate_limit_time"])
+                        # prep args
+                        args = [self.config["youtube-dl_cmd"],  # youtube-dl bin
+                                "https://chaturbate.com/{}/".format(streamer[0]),  # chaturbate url
+                                "--config-location", self.config["youtube-dl_config"]]  # youtube-dl config
+                        # append idx and process to processes list
+                        self.processes.append([streamer[0], subprocess.Popen(args, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)])
+
+                        # set to recording
+                        self.config["streamers"][idx][1] = True
+                    
+                    # check rate limit
+                    if self.config["rate_limit"]:
+                        time.sleep(self.config["rate_limit_time"])
+
+                except Exception:
+                    self.logger.exception("recording error")
+                    time.sleep(1)
 
             # wait 1 min in 1 second intervals
             for i in range(60):
