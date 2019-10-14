@@ -96,7 +96,7 @@ class Bot:
 
                     # check if ended
                     if rec[1].poll() is not None:
-                        self.logger.info("Stopped recording", rec[0])
+                        self.logger.info("Stopped recording {}".format(rec[0]))
 
                         # set streamer recording to false
                         for loc, streamer in enumerate(self.config["streamers"]):
