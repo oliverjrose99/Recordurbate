@@ -84,29 +84,30 @@ class Bot:
     def run(self):
         while self.running:
             
-            # reload config
-            if self.config["auto_reload_config"]:
-                self.reload_config()
+            # debug
+            try:
 
-            # check current processes
-            for idx, rec in enumerate(self.processes):
+                # reload config
+                if self.config["auto_reload_config"]:
+                    self.reload_config()
 
-                # check if ended
-                if rec[1].poll() is not None:
-                    self.logger.info("Stopped recording", rec[0])
+                # check current processes
+                for idx, rec in enumerate(self.processes):
 
-                    # set streamer recording to false
-                    for loc, streamer in enumerate(self.config["streamers"]):
-                        if streamer[0] == rec[0]:
-                            self.config["streamers"][loc][1] = False
+                    # check if ended
+                    if rec[1].poll() is not None:
+                        self.logger.info("Stopped recording", rec[0])
 
-                    # remove from proc list
-                    del self.processes[idx]
+                        # set streamer recording to false
+                        for loc, streamer in enumerate(self.config["streamers"]):
+                            if streamer[0] == rec[0]:
+                                self.config["streamers"][loc][1] = False
 
-            # check to start recording
-            for idx, streamer in enumerate(self.config["streamers"]):
+                        # remove from proc list
+                        del self.processes[idx]
 
-                try:
+                # check to start recording
+                for idx, streamer in enumerate(self.config["streamers"]):
 
                     # if already recording
                     if streamer[1]:
@@ -130,15 +131,15 @@ class Bot:
                     if self.config["rate_limit"]:
                         time.sleep(self.config["rate_limit_time"])
 
-                except Exception:
-                    self.logger.exception("recording error")
+                # wait 1 min in 1 second intervals
+                for i in range(60):
+                    if not self.running:
+                        break
+
                     time.sleep(1)
-
-            # wait 1 min in 1 second intervals
-            for i in range(60):
-                if not self.running:
-                    break
-
+                
+            except Exception:
+                self.logger.exception("loop error")
                 time.sleep(1)
 
         # loop ended, stop all recording
