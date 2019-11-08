@@ -49,7 +49,7 @@ class Bot:
         # remove all deleted streamers
         for idx, streamer in enumerate(self.config["streamers"]):
             if streamer[0] not in new_config["streamers"]:
-                self.logger.info(streamer[0], "has been removed")
+                self.logger.info("{} has been removed".format(streamer[0]))
                 del self.config["streamers"][idx]
 
         # add all new streamers
