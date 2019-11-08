@@ -78,7 +78,7 @@ class Bot:
             return False
 
         except Exception as e:
-            self.logger.info(e)
+            self.logger.exception(e)
             return None
 
     def run(self):
