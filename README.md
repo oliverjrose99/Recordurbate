@@ -7,7 +7,7 @@ The act of recording a Chaturbate live stream
 * FFmpeg
 ## Installation
 ```commandline
-wget https://github.com/oliverjrose99/Recordurbate/releases/download/2.0.3/recordurbate.tar
+wget https://github.com/oliverjrose99/Recordurbate/releases/download/2.0.4/recordurbate.tar
 tar -xf recordurbate.tar
 cd recordurbate
 chmod +x Recordurbate.py
