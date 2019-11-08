@@ -84,3 +84,6 @@ Some users found that no files were being made which was due to either software 
 
 ### Large Files and bandwidth usage
 Because the streams are intended to be watched live, there is little compression on the video. This can cause very large files and heavy internet usage as the max settings for some streamers are 4k/60fps and youtube-dl defaults to best available options. Internet usage can be reduced by using a lower quality and file size can be further reduced by compressing the file (will causes heavy CPU usage). All this can be done with youtube-dl config options. 
+
+### Termux support
+Recordurbate will work on termux but the python install location is different to normal Linux installs. You can either run the script as `python Recordurbate.py [command]` or change the shebang to `/data/data/com.termux/files/usr/bin/python3.7` and run the script as normal. I don't currently know how well YouTube-dl will work with changing between WiFi and 4G, but either way will use a lot of data and possibly battery. Please open an issue if you find any issues or have anything to add. 
