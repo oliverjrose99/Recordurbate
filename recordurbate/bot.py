@@ -117,10 +117,9 @@ class Bot:
                     if self.is_online(streamer[0]):
                         self.logger.info("Started to record {}".format(streamer[0]))
 
-                        # prep args
-                        args = [self.config["youtube-dl_cmd"],  # youtube-dl bin
-                                "https://chaturbate.com/{}/".format(streamer[0]),  # chaturbate url
-                                "--config-location", self.config["youtube-dl_config"]]  # youtube-dl config
+                        # prep args (dl bin and config)
+                        args = self.config["youtube-dl_cmd"].split(" ") + ["https://chaturbate.com/{}/".format(streamer[0]), "--config-location", self.config["youtube-dl_config"]] 
+                        
                         # append idx and process to processes list
                         self.processes.append([streamer[0], subprocess.Popen(args, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)])
 
