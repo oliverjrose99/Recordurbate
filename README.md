@@ -1,6 +1,7 @@
 # Recordurbate
 The act of recording a Chaturbate live stream
-# YOUTUBE-DL IS CURRENTLY BROKEN, PLEASE WAIT FOR A FIX AND THEN UPDATE YOUR INSTALL VIA PIP, APT, ETC.
+# YOUTUBE-DL IS CURRENTLY BROKEN
+[Please see this issue for a temp fix until youtube-dl is updated and released](https://github.com/oliverjrose99/Recordurbate/issues/23)
 ## Requirements
 * Linux
 * Python 3+ (requests)
