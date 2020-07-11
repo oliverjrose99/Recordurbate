@@ -71,6 +71,7 @@ class Bot:
         data = {"room_slug": username, "bandwidth": "high"}
 
         try:
+            time.sleep(3)  # fix issue 30
             r = requests.post(url, headers=headers, data=data)
             if r.json()["room_status"] == "public":
                 return True
