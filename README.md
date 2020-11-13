@@ -19,7 +19,7 @@ The default config files will work out of the box with youtube-dl and FFmpeg ins
 
 View the usage/help text
 ```
-./Recordurbate help
+./Recordurbate.py help
 ```
 
 Add or remove a streamer to record
@@ -34,12 +34,12 @@ Start, stop or restart the daemon
 
 List the streamers in the config
 ```
-./Recordurbate list
+./Recordurbate.py list
 ```
 
 Import streamers from a file
 ```
-./Recordurbate import [file]
+./Recordurbate.py import [file]
 ```
 
 Export streamers to a file. The file parameter is optional and the default location will be used if not passed
