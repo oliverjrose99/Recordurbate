@@ -122,7 +122,7 @@ class Bot:
                         args = self.config["youtube-dl_cmd"].split(" ") + ["https://chaturbate.com/{}/".format(streamer[0]), "--config-location", self.config["youtube-dl_config"]] 
                         
                         # append idx and process to processes list
-                        self.processes.append([streamer[0], subprocess.Popen(args, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)])
+                        self.processes.append([streamer[0], subprocess.Popen(args, 0)])
 
                         # set to recording
                         self.config["streamers"][idx][1] = True
