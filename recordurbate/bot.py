@@ -66,10 +66,18 @@ class Bot:
                 self.config["streamers"].append([new_streamer, False])
 
     def is_online(self, username):
-        # Fixes issue #69 "Failed when calling is_online(..), new API url available"
+        # Fixes issue #69 "Failed when calling is_online(..), new API url available."
+        # See the link below for full list of API parameters (gender, region, tag, limit, offset, etc..)
         # Official Chaturbate API https://chaturbate.com/affiliates/promotools/api_usersonline/
         # Special thanks to https://www.blackhatworld.com/seo/chaturbate-api.1028000/page-2#post-11041420
-        url = "https://chaturbate.com/api/public/affiliates/onlinerooms/?wm=DkfRj&client_ip=request_ip"
+        
+        # With this API url, cam username must be in the first 500 results in order to be current_show="public" to be verified, due to max limit=500
+        # offset=(any non-negative number) can be included to obtain more results beyond the first 500.
+        
+        # With this API url, cam username must be in the first 500 results in order to be current_show="public" to be verified, due to max limit=500
+        # offset=(any non-negative number) can be included to obtain more results beyond the first 500.
+        MAX_API_RESULTS = "500" 
+        url = "https://chaturbate.com/api/public/affiliates/onlinerooms/?wm=DkfRj&client_ip=request_ip&limit=" + MAX_API_RESULTS
 
         try:
             time.sleep(3)  # fix issue 30
