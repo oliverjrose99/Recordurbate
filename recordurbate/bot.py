@@ -66,19 +66,27 @@ class Bot:
                 self.config["streamers"].append([new_streamer, False])
 
     def is_online(self, username):
-        url = "https://chaturbate.com/get_edge_hls_url_ajax/"
-        headers = {"X-Requested-With": "XMLHttpRequest"}
-        data = {"room_slug": username, "bandwidth": "high"}
+        # Fixes issue #69 "Failed when calling is_online(..), new API url available"
+        # Official Chaturbate API https://chaturbate.com/affiliates/promotools/api_usersonline/
+        # Special thanks to https://www.blackhatworld.com/seo/chaturbate-api.1028000/page-2#post-11041420
+        url = "https://chaturbate.com/api/public/affiliates/onlinerooms/?wm=DkfRj&client_ip=request_ip"
 
         try:
             time.sleep(3)  # fix issue 30
-            r = requests.post(url, headers=headers, data=data)
-            if r.json()["room_status"] == "public":
-                return True
+            r = requests.get(url)
+            results =  r.json()["results"]
+            
+            self.logger.debug(r)
+            self.logger.debug(results)
+            
+            for result in results:
+                if result["username"] == username and result["current_show"] in ["public"]:
+                    return True
 
             return False
 
         except Exception as e:
+            self.logger.exception("Exception: call to is_online(..) failed.")
             self.logger.exception(e)
             return None
 
