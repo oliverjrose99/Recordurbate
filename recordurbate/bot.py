@@ -73,9 +73,6 @@ class Bot:
         
         # With this API url, cam username must be in the first 500 results in order to be current_show="public" to be verified, due to max limit=500
         # offset=(any non-negative number) can be included to obtain more results beyond the first 500.
-        
-        # With this API url, cam username must be in the first 500 results in order to be current_show="public" to be verified, due to max limit=500
-        # offset=(any non-negative number) can be included to obtain more results beyond the first 500.
         MAX_API_RESULTS = "500" 
         url = "https://chaturbate.com/api/public/affiliates/onlinerooms/?wm=DkfRj&client_ip=request_ip&limit=" + MAX_API_RESULTS
 
