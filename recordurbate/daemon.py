@@ -35,6 +35,7 @@ class Daemon:
         # double fork
         try:
             # Note: os.fork() "returns 0 in the child process and child’s process id in the parent process".
+            # See https://www.geeksforgeeks.org/python-os-fork-method/
             pid = os.fork()
             if pid > 0:
                 self.logger.debug("Parent PID = {}".format(os.getpid()))
