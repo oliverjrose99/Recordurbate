@@ -30,20 +30,28 @@ class Daemon:
 
     def daemonize(self):
         self.logger.info("Starting daemon")
+        self.logger.debug("calling os.fork()")
 
         # double fork
         try:
+            # Note: os.fork() "returns 0 in the child process and child’s process id in the parent process".
+            # See https://www.geeksforgeeks.org/python-os-fork-method/
             pid = os.fork()
             if pid > 0:
+                self.logger.debug("Parent PID = {}".format(os.getpid()))
                 sys.exit(0)
             
             pid = os.fork()
             if pid > 0:
+                self.logger.debug("Fork PID = {}".format(os.getpid()))
                 sys.exit(0)
+            
+                self.logger.debug("Double Fork PID = {} - fully daemonized".format(os.getpid()))
 
-        except OSError as e:
-            self.logger.info("Failed to daemonize, {}".format(e))
-            print("Failed to daemonize, {}".format(e))
+        except Exception as e:
+            # Issue #65 - os.fork() fails in Windows but it does not throw OSError which bypassed the catch block. Resolved issue by changing "OSError" to "Exception".
+            self.logger.exception("Failed to daemonize, {}. ".format(e))
+            print("Failed to daemonize. Note: run recordurbate on Linux terminal instead of Windows. See " + logfile + " for details.")
             sys.exit(1)
 
         # close std's
