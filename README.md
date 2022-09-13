@@ -15,13 +15,6 @@ $ pip3 install youtube-dl requests
 ```
 ## Installation
 ```commandline
-$ wget https://github.com/oliverjrose99/Recordurbate/releases/download/2.0.4/recordurbate.tar
-$ tar -xf recordurbate.tar
-$ cd recordurbate
-$ chmod +x Recordurbate.py
-```
-OR
-```commandline
 $ git clone https://github.com/oliverjrose99/Recordurbate.git
 ```
 The default config files will work out of the box with youtube-dl and FFmpeg installed. Streams will be saved to the folder videos/\<name>/\<name> \<date> \<hour>_\<min>.mp4. This can be changed by editing the youtube-dl.config file, see the configuration section for more. 
