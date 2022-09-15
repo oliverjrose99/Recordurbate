@@ -25,7 +25,8 @@ class Daemon:
         fh = logging.FileHandler(self.logfile)
         fh.setLevel(logging.DEBUG)
 
-        fh.setFormatter(logging.Formatter("%(asctime)s - %(message)s"))
+        FORMAT = "[%(asctime)s %(filename)s:%(lineno)s - %(funcName)s()]- %(message)s"
+        fh.setFormatter(logging.Formatter(FORMAT))
         self.logger.addHandler(fh)
 
     def daemonize(self):
