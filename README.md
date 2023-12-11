@@ -5,13 +5,13 @@ Youtube-dl was previously broken, please update your installs to >= 2019.11.22
 ## Requirements
 * Linux / Android (with Termux)
 * Python 3+ (requests)
-* Youtube-dl
+* Yt-dlp
 * FFmpeg
 
 ```commandline
 # apt update && apt upgrade
 # apt install python3 ffmpeg
-$ pip3 install youtube-dl requests
+$ pip3 install yt-dlp requests
 ```
 ## Installation
 ```commandline
